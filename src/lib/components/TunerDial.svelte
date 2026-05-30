@@ -52,6 +52,17 @@
 		dragging = false;
 	}
 
+	function onKeyDown(e: KeyboardEvent) {
+		const step = e.shiftKey ? 1.0 : 0.1;
+		if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+			e.preventDefault();
+			onfrequencychange?.(Math.min(FREQ_MAX, Math.round((frequency + step) * 10) / 10));
+		} else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+			e.preventDefault();
+			onfrequencychange?.(Math.max(FREQ_MIN, Math.round((frequency - step) * 10) / 10));
+		}
+	}
+
 	// 201 ticks spanning the 270° arc, one per 0.1 MHz step
 	const ticks = Array.from({ length: 201 }, (_, i) => {
 		const freq = FREQ_MIN + i * 0.1;
@@ -85,6 +96,7 @@
 	onpointermove={onPointerMove}
 	onpointerup={onPointerUp}
 	onpointercancel={onPointerUp}
+	onkeydown={onKeyDown}
 >
 	<!-- Outer shadow ring -->
 	<circle cx="0" cy="0" r="1.08" fill="#0A0B0D" />
