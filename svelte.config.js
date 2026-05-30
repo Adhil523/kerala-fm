@@ -10,7 +10,11 @@ const config = {
   kit: {
     adapter: isStatic
       ? adapterStatic({ fallback: 'index.html' })
-      : adapterNode()
+      : adapterNode(),
+    alias: {
+      '$lib': './src/lib',
+      '$lib/*': './src/lib/*'
+    }
   }
 };
 
